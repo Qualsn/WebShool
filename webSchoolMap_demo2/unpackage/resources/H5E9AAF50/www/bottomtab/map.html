@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta http-equiv="Access-Control-Allow-Origin" content="">
+
+		<meta http-equiv="content-security-policy">
+
+		<link rel="stylesheet" href="../css/mui.min.css">
+
+		<link href="../css/mui.indexedlist.css" rel="stylesheet" />
+		<style type="text/css">
+			.mui-table-view.mui-grid-9 .mui-table-view-cell.mui-active {
+				/*替换成自己的颜色*/
+				background-color: #fff;
+			}
+			
+			.map-container {
+				min-width: 600px;
+				min-height: 580px;
+			}
+			
+			.list-container {
+				height: 0 !important;
+			}
+		</style>
+		<script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=BQJBZ-TIYCG-UUNQY-IQWQU-OWBHS-YBFCI&libraries=convertor"></script>
+
+	</head>
+
+	<body>
+
+		<div class="mui-content">
+			<div id='list' class="mui-indexed-list" style="height: 0;">
+				<header class="mui-bar mui-bar-nav">
+
+					<div class="mui-indexed-list-search mui-input-row mui-search">
+						<input type="search" class="mui-input-clear mui-indexed-list-search-input " onkeyup="enterSearch(event)" name="searchMap" id="searchMap" placeholder="热门搜索">
+					</div>
+				</header>
+				<div class="mui-content">
+					<div id="searchTipBox" class="mui-hidden">
+						<div class="mui-indexed-list-bar">
+							<a>A</a>
+							<a>B</a>
+							<a>C</a>
+							<a>D</a>
+							<a>E</a>
+							<a>F</a>
+							<a>G</a>
+							<a>H</a>
+							<a>I</a>
+							<a>J</a>
+							<a>K</a>
+							<a>L</a>
+							<a>M</a>
+							<a>N</a>
+							<a>O</a>
+							<a>P</a>
+							<a>Q</a>
+							<a>R</a>
+							<a>S</a>
+							<a>T</a>
+							<a>U</a>
+							<a>V</a>
+							<a>W</a>
+							<a>X</a>
+							<a>Y</a>
+							<a>Z</a>
+						</div>
+						<div class="mui-indexed-list-alert"></div>
+						<div class="mui-indexed-list-inner">
+							<div class="mui-indexed-list-empty-alert">没有数据</div>
+							<ul class="mui-table-view search-table-list " id="search-tip-list">
+								<li data-group="Z" class="mui-table-view-divider mui-indexed-list-group">Z</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="map-container" id="map-container"></div>
+		</div>
+
+	</body>
+
+	<script src="../js/mui.js"></script>
+	<script src="../js/mui.indexedlist.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		mui.init({
+			swipeBack: true, //启用右滑关闭功能，
+
+		});
+
+		mui.ready(function() {
+			/*/var header = document.querySelector('header.mui-bar');
+			var list = document.getElementById('list');
+			//calc hieght
+			list.style.height = (document.body.offsetHeight - header.offsetHeight) + 'px';
+			//list.style.maxHeight = '300px';
+			console.log(document.body.offsetHeight - header.offsetHeight)
+			//create
+			window.indexedList = new mui.IndexedList(list);*/
+
+		});
+
+		let nativeWebview, imm, InputMethodManager;
+		let initNativeObjects = function() {
+			if(mui.os.android) {
+				let main = plus.android.runtimeMainActivity();
+				let Context = plus.android.importClass("android.content.Context");
+				InputMethodManager = plus.android.importClass("android.view.inputmethod.InputMethodManager");
+				imm = main.getSystemService(Context.INPUT_METHOD_SERVICE);
+			} else {
+				nativeWebview = plus.webview.currentWebview().nativeInstanceObject();
+			}
+		};
+		let showSoftInput = function() {
+			if(mui.os.android) {
+				imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+			} else {
+				nativeWebview.plusCallMethod({
+					"setKeyboardDisplayRequiresUserAction": false
+				});
+			}
+			setTimeout(function() {
+				var inputElem = document.querySelector('input');
+				inputElem.focus();
+				inputElem.parentNode.classList.add('mui-active'); //第一个是search，加上激活样式
+			}, 200);
+		};
+		mui.plusReady(function() {
+			//initNativeObjects();
+			//showSoftInput();
+
+		});
+	</script>
+	<script src="../js/map.js"></script>
+	<script type="text/javascript">
+		//mark data
+		const tableData = {
+			type: 0,
+			status: 200,
+			msg: "success",
+			data: [{
+					index: 0,
+					type: "宿舍楼",
+					detail: [{
+							name: "西学楼1号",
+							longitude: 23.630562546065935,
+							lalitude: 113.67554247379303,
+							phone: 123456789
+						},
+						{
+							name: "西学楼2号",
+							longitude: 23.62999245047551,
+							lalitude: 113.67580533027649,
+							phone: 233333333
+						},
+						{
+							name: "西学楼3号",
+							longitude: 23.62965334071436,
+							lalitude: 113.67596089872677,
+							phone: 123123124124
+						}
+					]
+				},
+				{
+					index: 1,
+					type: "教学楼",
+					detail: [{
+							name: "教学楼1号",
+							longitude: 23.631761704627003,
+							lalitude: 113.67673873901367,
+							phone: 123456789
+						},
+						{
+							name: "教学楼2号",
+							longitude: 23.631314478695728,
+							lalitude: 113.67692112922668,
+							phone: 233333333
+						},
+						{
+							name: "教学楼3号",
+							longitude: 23.630940970179182,
+							lalitude: 113.6770498752594,
+							phone: 123123124124
+						},
+						{
+							name: "教学楼4号",
+							longitude: 23.63058711909593,
+							lalitude: 113.67732882499695,
+							phone: 123123124124
+						}
+					]
+				}
+			]
+		}
+
+		function clearOverlays(overlays) {
+			var overlay;
+			while(overlay = overlays.pop()) {
+				overlay.setMap(null);
+			}
+		}
+
+		//初始化搜索list
+		function initList() {
+			var header = document.querySelector('header.mui-bar');
+			var list = document.getElementById('list');
+			//calc hieght
+			list.style.height = (document.body.offsetHeight - header.offsetHeight) + 'px';
+			//list.style.minHeight = '300px';
+			//console.log(document.body.offsetHeight - header.offsetHeight)
+			//create
+			window.indexedList = new mui.IndexedList(list);
+		}
+
+		//隐藏索引列表，显示地图
+		function hiddenSearchList() {
+			document.getElementById('searchTipBox').classList.add('mui-hidden');
+			document.getElementById('list').classList.add('list-container');
+			document.getElementById('map-container').classList.remove('mui-hidden');
+		}
+
+		function hiddenMap() {
+			document.getElementById('searchTipBox').classList.remove('mui-hidden');
+			document.getElementById('list').classList.remove('list-container');
+			document.getElementById('map-container').classList.add('mui-hidden');
+		}
+
+		function getSearchTipMsg(keyword) {
+
+			let url = `https://apis.map.qq.com/ws/place/v1/suggestion/?region=广州&keyword=中山大学南方学院&key=BQJBZ-TIYCG-UUNQY-IQWQU-OWBHS-YBFCI`;
+
+			mui.getJSON(url, function(response) {
+				let items = response.data;
+				//console.log(items)
+				let length = items.length > 20 ? 20 : items.length;
+				let resHtml = "";
+				for(let i = 0; i < length; i++) {
+					resHtml = resHtml + `
+						<li data-id = ${items[i].id} data-val=${items[i].title} data-lat=${items[i].location.lat} data-lng=${items[i].location.lng} class="mui-table-view-cell mui-indexed-list-item item-list">${items[i].title}</li>
+					`
+				}
+				document.getElementById('search-tip-list').innerHTML = resHtml;
+
+			});
+
+		}
+
+		// 搜索事件,获取搜索关键词
+		function enterSearch(event) {
+			console.log("enters")
+			initList();
+			let val = mui('#searchMap')[0].value;
+			console.log(val)
+			if((event.key === "Tab" && val === "") || val === "") {
+				hiddenSearchList();
+			} else {
+				hiddenMap();
+				getSearchTipMsg(val);
+			}
+
+			if(event.keyCode == 13) { //用户点击回车的事件号为13
+				hiddenSearchList();
+				//clearOverlays(markers);
+				//searchService.search(val);
+				document.activeElement.blur(); //收起虚拟键盘
+				event.preventDefault();
+				mui.toast("请点击建议搜索")
+			}
+
+		}
+		
+		var mapContainer=document.getElementById("map-container")
+		qq.maps.event.addDomListener(mapContainer, 'mousemove', function(event) {
+			document.activeElement.blur(); //收起虚拟键盘
+			event.preventDefault();
+			//mui.toast("请点击建议搜索")
+			//console.log("xxx")
+		});
+
+		//搜索框清楚按钮
+		mui("body").on("tap", ".mui-icon-clear", function() {
+			console.log("333") //执行两遍
+			hiddenSearchList();
+			document.activeElement.blur(); //收起虚拟键盘
+			event.preventDefault();
+
+		})
+
+		//点击索引列表触发的事件
+		mui(".search-table-list").on("tap", "li", function() {
+			//console.log(this)
+			console.log("123")
+			//clearOverlays(markers);
+			let listVal = this.getAttribute('data-val'); //获取其它属性值  
+			//console.log(listVal)
+			mui('#searchMap')[0].value = listVal;
+			let params = {
+				lalitude: this.getAttribute('data-lat'),
+				longitude: this.getAttribute('data-lng'),
+				title: listVal
+			}
+
+			//onloadPlaceTypeDetailMap(params)
+			showSearchMap(params)
+			//let searchVal = mui('#searchMap')[0].value;
+			hiddenSearchList();
+			document.activeElement.blur(); //收起虚拟键盘
+
+		})
+	</script>
+
+</html>

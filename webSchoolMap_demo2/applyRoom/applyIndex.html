@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="css/mui.min.css">
+		<link rel="stylesheet" href="css/time.css">
+		<link rel="stylesheet" href="css/mui.dtpicker.css">
+		<link rel="stylesheet" type="text/css" href="css/mui.picker.min.css" /><!-- 引入时间选择器布局 -->
+		<link href="css/mui.picker.css" rel="stylesheet" /> <!-- 引入地点选择器布局 -->
+		<script src="js/jquery-3.3.1.min.js"></script>
+		<style>
+			html,body {
+				background-color: #efeff4;
+			}
+			.title{
+				margin: 20px 15px 10px;
+				color: #6d6d72;
+				font-size: 15px;
+				/* height: 17px; */
+			}
+			.building{
+				vertical-align: middle;
+			}
+		</style>
+		<!-- <script src="../js/SelectDate.js"></script> -->
+	</head>
+
+	<body>
+		<div style="width:100%;height: 100%;">
+
+			<header id="header" class="mui-bar mui-bar-nav">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">申请课室</h1>
+				<button id="myapply" class="mui-btn mui-btn-blue mui-btn-link mui-pull-right" type="button" onclick="oppoint()">我的预约</button>
+			</header>
+
+			<div class="mui-content">
+				<button id='demo2' class="btn mui-btn mui-btn-blue mui-btn-block">
+					请选择日期
+				</button>
+				<!-- <button id='sel-time' class="sel-time">请选择时间</button> -->
+				<button type="button" class="mui-btn mui-btn-blue  mui-btn-block" id="sel-time" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+					选择时间段
+				</button>
+
+				<div class="building" style="float: left;padding-left: 4px;margin-top: 10px;">
+					<p style="float: left; ">教学楼：</p>
+					<button id='teachbuilding' class="mui-btn mui-btn-primary mui-btn-outlined" type='button' style="width: 120px;">请选择</button>
+				</div>
+
+				<div class="room" style="float: right;padding-right: 8px;margin-top: 10px;">
+					<p style="float: left;">预约课室：</p>
+					<button id='replyroom' class="mui-btn mui-btn-primary mui-btn-outlined" type='button' type='button'>请选择</button>
+				</div>
+
+				<!-- 时间选择器 -->
+				<div class="time-box">
+					<ul>
+
+						<li class="check_li mycheck"><input type="checkbox" id="check_time" class="tui-checkbox " name="check" value="8点~9点">
+							<label for="check_time"></label>
+							8&nbsp;&nbsp;点~&nbsp;9 &nbsp;点
+						</li>
+						<li class="check_li"><input type="checkbox" id="check_time" class="tui-checkbox" name="check" value="9点~10点">
+							</label>
+							9 &nbsp;&nbsp;点~10点
+						</li>
+						<li class="check_li"><input type="checkbox" id="check_time" class="tui-checkbox" name="check" value="10点~11点">
+							10点~11点
+						</li>
+						<li class="check_li"><input type="checkbox" id="check_time" class="tui-checkbox" name="check" value="11点~12点">
+							11点~12点
+						</li>
+						<li class="check_li"><input type="checkbox" id="check_time" class="tui-checkbox" name="check" value="12点~13点">
+							12点~13点
+						</li>
+						<li class="check_li"><input type="checkbox" id="check_time" class="tui-checkbox" name="check" value="13点~14点">
+							13点~14点
+						</li>
+						<li class="check_li"><input type="checkbox" id="check_time" class="tui-checkbox" name="check" value="14点~15点">
+							14点~15点
+						</li>
+						<li class="check_li"><input type="checkbox" id="check_time" class="tui-checkbox" name="check" value="15点~16点">
+							15点~16点
+						</li>
+						<li class="check_li"><input type="checkbox" id="check_time" class="tui-checkbox" name="check" value="16点~17点">
+							16点~17点
+						</li>
+						<li class="check_li"><input type="checkbox" id="check_time" class="tui-checkbox" name="check" value="17点~18点">
+							17点~18点
+						</li>
+						<li class="check_li"><input type="checkbox" id="check_time" class="tui-checkbox" name="check" value="18点~19点">
+							18点~19点
+						</li>
+						<li class="check_li"><input type="checkbox" id="check_time" class="tui-checkbox" name="check" value="19点~20点">
+							19点~20点
+						</li>
+						<li class="check_li"><input type="checkbox" id="check_time" class="tui-checkbox" name="check" value="20点~21点">
+							20点~21点
+						</li>
+					</ul>
+					<button name="" id="cancel-time" class="cancel-time mui-btn mui-btn-info">取消</button>
+					<button name="" id="confirm-time" class="mui-btn mui-btn-info">确认</button>
+				</div>
+
+				<!-- /姓名 -->
+				<div class="message-name">
+					<div>
+						<input type="text" id="name" class="mui-input-clear" style="margin-bottom: 7px;" placeholder="请输入姓名">
+						<input type="text" id="phone" class="mui-input-clear" style="margin-bottom: 7px;" placeholder="请输入电话号码">
+					     
+					</div>
+				</div>
+
+
+				<!-- 显示已选信息 -->
+				<div class="time-message-box" id="time-message-box">
+					<div class="t-message">
+						<table class="message-tab">
+							<tr>
+							<tr>
+								<th>教学楼</th>
+								<th>课室</th>
+								<th>日期</th>
+								<th>时间段</th>
+							</tr>
+							<tr>
+								<td id="lou" class="message-content" style="width: 22%;">空</td>
+								<td id="shi" class="message-content" style="width: 13%;">空</td>
+								<td id="date1" class="message-content" style="width: 25%;">空</td>
+								<td id="time1" class="message-content" style="width: 40%; font-size: 10.5px;">空</td>
+							</tr>
+							</tr>
+						</table>
+					</div>
+					<div class="message-btn">
+						<button id="mes-btn" name="" type="button" value="提交" class="mui-btn mui-btn-primary  mui-icon mui-icon-compose "
+						 data-loading-text="提交中" data-loading-icon-position="right" style="font-size: 15px;padding-left: 6px;">预约</button>
+					</div>
+				</div>
+				
+				<label style="display: none;" id="account"></label>
+
+
+
+
+				<div class="shuoming" style="display: flex;height: 20%; justify-content: center;align-items: center;position: fixed;bottom: 10px;">
+					<div class="reason" style="color: #fff;">申请原因：</div>
+
+					<div class="text-r">
+						<textarea id="texta" rows="5" style="height: 100%; border: #fff;" placeholder="写入你的原因"></textarea>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+
+		<script src="../js/mui.picker.js"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/mui.picker.min.js"></script>
+		<script src="../js/app.js"></script>
+		<script src="js/applyIndex.js"></script>
+		<script>
+			//点击空白关掉弹出框
+			$(document).click(function(e) {
+				var _con = $('.mui-content'); // 设置目标区域
+				if ((!_con.is(e.target) && _con.has(e.target).length === 0)) {
+					// console.log(1);
+					$('.time-box').css('display', 'none');
+				}
+			});
+
+			var userid = null;
+			mui.plusReady(function() {
+				//全局变量userid
+
+				var settings = app.getSettings();
+				//下面的监听是获取id
+				window.addEventListener('show', function() {
+					var state = app.getState();
+					// mui.toast(JSON.stringify(state));
+					localStorage.setItem('message', state.account);
+					localStorage.setItem('img', state.img);
+					localStorage.setItem('nicheng', state.nicheng);
+					localStorage.setItem('province', state.province);
+					localStorage.setItem('city', state.city);
+					userid = state.account;
+					document.getElementById('account').innerHTML = userid;
+                   mui.fire(plus.webview.getWebviewById('bottomtab/me.html'),'refresh');  
+				   
+				}, false);
+			});
+
+
+
+
+
+			//选择时间事件
+			var sel_time = $('#sel-time');
+			sel_time.click(function() {
+				$('.time-box').css({
+					display: 'block'
+				});
+			});
+			$('.time-box>#cancel-time').click(function() {
+				$('.time-box').css({
+					display: 'none'
+				});
+			});
+			$('.time-box>#confirm-time').click(function() {
+				$('.time-box').css({
+					display: 'none'
+				});
+				var re_time = document.getElementsByName("check");
+				var chack_time = new Array();
+				for (var k in re_time) {
+					if (re_time[k].checked == true) {
+						chack_time.push(re_time[k].value);
+					}
+				}
+				document.getElementById('sel-time').innerHTML = '时间段:' + chack_time;
+				// console.log('时间段:' + chack_time);
+				var time1 = document.getElementById('time1');
+				time1.innerHTML = chack_time;
+			});
+
+
+			mui.init({
+				swipeBack: true, //启用右滑关闭功能
+
+
+			});
+
+			
+			//日期
+			(function($) {
+				$.init();
+
+				var result = $('#result')[0];
+				var btns = $('.btn');
+				btns.each(function(i, btn) {
+					btn.addEventListener('tap', function() {
+						var _self = this;
+						if (_self.picker) {
+							_self.picker.show(function(rs) {
+								btn.innerHTML = '预约日期: ' + rs.text;
+								// _self.picker.dispose();
+								_self.picker = null;
+
+								var date1 = document.getElementById('date1');
+								date1.innerHTML = rs.text;
+							});
+						} else {
+							var currentyear = new Date().getFullYear();
+							var currentmonth = new Date().getMonth();
+							var currentday = new Date().getDate();
+
+							_self.picker = new mui.DtPicker({
+								type: "date", //时间样式为月日式
+								// 										beginMonth:currentmonth,
+								// 										endMonth:currentmonth,
+								// 										beginDay:currentday,
+								// 										endDay:currentday+7
+								beginDate: new Date(2019, currentmonth, currentday + 1), //设置开始日期
+								endDate: new Date(2019, currentmonth, currentday + 7), //设置结束日期
+							})
+							_self.picker.show(function(rs) {
+								/*
+								 * rs.value 拼合后的 value
+								 * rs.text 拼合后的 text
+								 * rs.y 年，可以通过 rs.y.vaue 和 rs.y.text 获取值和文本
+								 * rs.m 月，用法同年
+								 * rs.d 日，用法同年
+								 * rs.h 时，用法同年
+								 * rs.i 分（minutes 的第二个字母），用法同年
+								 */
+								console.log(rs.text);
+								btn.innerHTML = '预约日期: ' + rs.text;
+
+								var date1 = document.getElementById('date1');
+								date1.innerHTML = rs.text;
+								/* 
+								 * 返回 false 可以阻止选择框的关闭
+								 * return false;
+								 */
+								/*
+								 * 释放组件资源，释放后将将不能再操作组件
+								 * 通常情况下，不需要示放组件，new DtPicker(options) 后，可以一直使用。
+								 * 当前示例，因为内容较多，如不进行资原释放，在某些设备上会较慢。
+								 * 所以每次用完便立即调用 dispose 进行释放，下次用时再创建新实例。
+								 */
+								_self.picker.dispose();
+								_self.picker = null;
+							});
+						}
+
+					}, false);
+				});
+
+
+
+
+				/**
+				 * 获取对象属性的值
+				 * 主要用于过滤三级联动中，可能出现的最低级的数据不存在的情况，实际开发中需要注意这一点；
+				 * @param {Object} obj 对象
+				 * @param {String} param 属性名
+				 */
+				var _getParam = function(obj, param) {
+					return obj[param] || '';
+				};
+				//普通示例
+				var userPicker = new $.PopPicker();
+				userPicker.setData([{
+					value: 'ywj',
+					text: '教学楼1号'
+				}, {
+					value: 'aaa',
+					text: '教学楼2号'
+				}, {
+					value: 'lj',
+					text: '教学楼3号'
+				}, {
+					value: 'ymt',
+					text: '教学楼4号'
+				}, {
+					value: 'shq',
+					text: '教学楼5号'
+				}, {
+					value: 'zhbh',
+					text: '教学楼6号'
+				}, {
+					value: 'zhy',
+					text: '教学楼7号'
+				}, {
+					value: 'gyf',
+					text: '教学楼8号'
+				}, {
+					value: 'zhz',
+					text: '教学楼9号'
+				}, {
+					value: 'gezh',
+					text: '教学楼10号'
+				}, {
+					value: 'gezh',
+					text: '教学楼11号'
+				}, {
+					value: 'gezh',
+					text: '教学楼12号'
+				}]);
+				var showUserPickerButton = document.getElementById('teachbuilding');
+				// var userResult = doc.getElementById('userResult');
+				showUserPickerButton.addEventListener('tap', function(event) {
+					userPicker.show(function(items) {
+						var data = items[0].text;
+						showUserPickerButton.innerHTML = data;
+
+						var lou = document.getElementById('lou');
+						lou.innerHTML = data;
+						//返回 false 可以阻止选择框的关闭
+						//return false;
+					});
+				}, false);
+
+
+				var roompicker = new $.PopPicker();
+				roompicker.setData([{
+					value: 'ywj',
+					text: '105'
+				}, {
+					value: 'aaa',
+					text: '106'
+				}, {
+					value: 'lj',
+					text: '205'
+				}, {
+					value: 'ymt',
+					text: '206'
+				},{
+					value: 'ymt',
+					text: '205'
+				},{
+					value: 'ymt',
+					text: '306'
+				}
+				]);
+				var showRoomPickerButton = document.getElementById('replyroom');
+				// var userResult = doc.getElementById('userResult');
+				showRoomPickerButton.addEventListener('tap', function(event) {
+					roompicker.show(function(items) {
+						var data = items[0].text;
+						showRoomPickerButton.innerHTML = data;
+
+						var shi = document.getElementById('shi');
+						shi.innerHTML = data;
+						//返回 false 可以阻止选择框的关闭
+						//return false;
+					});
+				}, false);
+
+
+			})(mui);
+
+
+
+			//我的预约
+			function oppoint() {
+				var user_id = localStorage.getItem('message');
+				if (user_id != "") {
+					mui.openWindow({
+						url: "MyApplyDetail.html",
+						id: "placeTypeList",
+						extras: {
+							items: user_id,
+						},
+						createNew: false, //是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+						show: {
+							autoShow: true, //页面loaded事件发生后自动显示，默认为true
+							aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
+							duration: 100 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '正在加载...', //等待对话框上显示的提示内容
+						}
+
+					})
+				} else {
+					alert('无值');
+				}
+			}
+		
+			
+		</script>
+	</body>
+
+</html>

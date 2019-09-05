@@ -1,0 +1,22 @@
+.topname{
+    position: relative;
+    /* display: flex; */
+    margin-top: 12%;
+    /* justify-content: center; */
+    /* float: right; */
+    width: 100%;
+    height: 20px;
+    text-align: center;
+}
+.topname p{
+	position: relative;
+	margin: 2px;
+	padding: 2px;
+	display: flex;
+  justify-content: flex-end;
+  font-size: 20px;
+}
+
+#ul-content{
+	margin-top: 2px;
+}

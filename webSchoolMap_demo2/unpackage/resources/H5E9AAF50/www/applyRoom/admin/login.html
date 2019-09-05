@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>中南map管理后台</title>
+    <link rel="shortcut icon" href="assets/img/logo.jpg" type="image/x-icon">
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="assets/css/weather-icons.min.css" rel="stylesheet" />
+    <link id="beyond-link" href="assets/css/beyond.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="login-container">
+        <div class="loginbox bg-white">
+            <div class="loginbox-title">登录</div>
+            
+            <div class="loginbox-or">
+                <div class="or-line"></div>
+            </div>
+            <div class="loginbox-textbox">
+                <input type="text" class="form-control" placeholder="用户名" id="admin_name" />
+            </div>
+            <div class="loginbox-textbox">
+                <input type="password" class="form-control" placeholder="密码" id="admin_password" />
+            </div>
+            <div class="loginbox-forgot">
+                <a href="">忘记密码?</a>
+            </div>
+            <div class="loginbox-submit">
+                <input type="button" class="btn btn-primary btn-block" value="Login" onclick="login()">
+            </div>
+            <div class="loginbox-signup">
+                <a href="#">注册账户</a>
+            </div>
+        </div>
+       
+    </div>
+
+    <script src="assets/js/skins.min.js"></script>
+    <!--Basic Scripts-->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/slimscroll/jquery.slimscroll.min.js"></script>
+    <!--Beyond Scripts-->
+    <script src="assets/js/beyond.js"></script>
+    <script>
+		var xmlHttp;
+		
+		function createXMLHttpRequest() {
+			if (window.ActiveXObject) {
+				try {
+					xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+				} catch (e) {
+					xmlHttp = false;
+				}
+			} else {
+				try {
+					xmlHttp = new XMLHttpRequest();
+				} catch (e) {
+					xmlHttp = false;
+				}
+			}
+			if (!xmlHttp)
+				alert("错误");
+			else
+				return xmlHttp;
+		}
+		function login(){
+			createXMLHttpRequest();
+			var name=document.getElementById('admin_name').value;
+			var password = document.getElementById('admin_password').value;
+			var formdata= new FormData();
+			formdata.append("name",name);
+			formdata.append("password",password);
+			$.ajax({
+				url: 'controller/addlogin.php', //后台地址
+				async: true, //异步
+				type: 'post', //post方式
+				data: formdata, //FormData数据
+				dataType: 'text',
+			
+				processData: false, //不处理数据流 !important
+				contentType: false, //不设置http头 !important
+				success: function(data) { //上传成功回调
+					console.log(data); //获取文件链接
+					if(data=='登录'){
+						window.location.href = 'index.html';
+					}else{
+						alert('登录失败!请重试~');
+					}
+			
+			
+				}
+			
+			})
+		}
+		
+        $(window).bind("load", function () {
+
+            /*Sets Themed Colors Based on Themes*/
+            themeprimary = getThemeColorFromCss('themeprimary');
+            themesecondary = getThemeColorFromCss('themesecondary');
+            themethirdcolor = getThemeColorFromCss('themethirdcolor');
+            themefourthcolor = getThemeColorFromCss('themefourthcolor');
+            themefifthcolor = getThemeColorFromCss('themefifthcolor');
+
+        });
+    </script>
+</body>
+<!--  /Body -->
+</html>

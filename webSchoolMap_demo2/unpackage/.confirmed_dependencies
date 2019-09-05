@@ -1,0 +1,57 @@
+{
+	"index.html": {
+		"refer": [
+			"detail.html",
+			"bottomtab/classroom.html",
+			"bottomtab/placeType.html",
+			"bottomtab/map.html"
+		],
+		"resources": [
+			"bottomtab/map.html",
+			"bottomtab/classroom.html"
+		]
+	},
+	"detail.html": {
+		"refer": [
+			"test.html"
+		]
+	},
+	"bottomtab/classroom.html": {
+		"refer": [
+			"bottomtab/MyApplyDetail.html"
+		]
+	},
+	"bottomtab/placeType.html": {
+		"refer": [
+			"bottomtab/map.html",
+			"bottomtab/placeTypeDetail.html",
+			"placeTypeDetail.html",
+			"placeTypeList.html",
+			"test.html",
+			"bottomtab/classroom.html"
+		]
+	},
+	"placeTypeList.html": {
+		"refer": [
+			"placeTypeMap.html",
+			"bottomtab/map.html"
+		]
+	},
+	"main.html": {
+		"resources": [
+			"bottomtab/map.html"
+		],
+		"refer": [
+			"bottomtab/placeType.html",
+			"bottomtab/map.html",
+			"bottomtab/me.html"
+		]
+	},
+	"login.html": {
+		"refer": [
+			"main.html",
+			"reg.html",
+			"forget_password.html"
+		]
+	}
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title></title>
+		<style type="text/css">
+			* {
+				touch-action: none;
+			}
+		</style>
+		<link href="css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left "></a>
+			<h1 class="mui-title">导航栏</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-card" style="margin-bottom: 35px;">
+				<ul class="mui-table-view" id="table-list">
+
+				</ul>
+			</div>
+		</div>
+	</body>
+	<script src="js/mui.min.js"></script>
+	<script type="text/javascript">
+		mui.init({
+			swipeBack: true //启用右滑关闭功能
+		});
+
+		mui.plusReady(function() {
+			let finalList = "";
+			let index = 0;
+			var params = plus.webview.currentWebview('placeTypeList');
+			let tableList = document.getElementById('table-list');
+			mui.each(params.items, (key, val) => {
+				finalList = finalList +
+					`<li class="mui-table-view-cell" data-id="${key}">
+						<a class="mui-navigate-right">
+							${val.name}
+						</a>
+					</li>`
+			})
+			tableList.innerHTML = finalList;
+
+			mui(".mui-table-view").on('tap', 'li', function(e) {
+				let id = this.getAttribute('data-id'); //获取其它属性值  
+				console.log(params.items[id])
+				mui.openWindow({
+					url: "./bottomtab/map.html",  //换成./bottomtab/map.html
+					id: "placeTypeMap",  //map
+					createNew: false, //是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+					show: {
+						autoShow: true, //页面loaded事件发生后自动显示，默认为true
+						aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
+						duration: 100 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+					},
+					extras: {
+						items: params.items[id],
+					},
+					waiting: {
+						autoShow: true, //自动显示等待框，默认为true
+						title: '正在加载...', //等待对话框上显示的提示内容
+					}
+				})
+
+			})
+
+		})
+	</script>
+
+</html>

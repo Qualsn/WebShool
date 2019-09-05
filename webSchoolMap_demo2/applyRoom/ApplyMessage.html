@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+		<script src="js/jquery-3.3.1.min.js"></script>
+		<!--App自定义的css-->
+		<!--<link rel="stylesheet" type="text/css" href="../css/app.css"/>-->
+
+	</head>
+	<body onload="show_content()">
+		<div>
+			<header class="mui-bar mui-bar-nav">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">预约列表</h1>
+				
+			</header>
+			<h5 class="mui-content-padded" style="margin: 62px 10px -2px 10px">已成功预约！</h5>
+			<div class="mui-content" style="padding-top: 10px;">
+
+				<div class="mui-card">
+
+					<ul class="mui-table-view" id="contents">
+					<!-- 	<li class="mui-table-view-cell mui-collapse">
+							<a class="mui-navigate-right">教学楼1号204</a>
+							<div class="mui-collapse-content">
+								<table>
+									<tr>
+										<th>日期:</th>
+										<td>
+											<lable>2019-05-04</lable>
+										</td>
+									</tr>
+									<tr>
+										<th>时间段:</th>
+										<td>
+											<lable>8点~9点,9点~10点</lable>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</li> -->
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script>
+			// 前后台交互数据
+			var xmlHttp;
+
+			function createXMLHttpRequest() {
+				if (window.ActiveXObject) {
+					try {
+						xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+					} catch (e) {
+						xmlHttp = false;
+					}
+				} else {
+					try {
+						xmlHttp = new XMLHttpRequest();
+					} catch (e) {
+						xmlHttp = false;
+					}
+				}
+				if (!xmlHttp)
+					alert("错误");
+				else
+					return xmlHttp;
+			}
+
+			function show_content() {
+				createXMLHttpRequest();
+				// console.log(12);
+				var status = 'show';
+				var formData = new FormData();
+				formData.append('status', status);
+				$.ajax({
+					url: 'http://172.27.35.2/File/applyRoom/controller/applyMesShow.php', //后台地址
+					async: true, //异步
+					type: 'post', //post方式
+					data: formData, //FormData数据
+					dataType: 'json',
+
+					processData: false, //不处理数据流 !important
+					contentType: false, //不设置http头 !important
+					success: function(data) { //上传成功回调
+						console.log(data); //获取文件链接
+						var content = data['data'];
+						for (var i = 0; i < content.length; i++){
+							var li =$("<li class='mui-table-view-cell mui-collapse'><a class='mui-navigate-right' id='address'></a><div class='mui-collapse-content'><table><tr><th>日期:</th><td><lable id='dates'></lable></td></tr><tr><th>时间段:</th><td><lable id='times'></lable></td></tr></table></div></li>");
+						    $("#contents").prepend(li);
+							li.find("#address").append(content[i]['floor']+content[i]['classroom']);
+							li.find("#dates").append(content[i]['date']);
+							li.find("#times").append(content[i]['time']);
+						}
+					}
+				})
+			}
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+		</script>
+	</body>
+
+</html>

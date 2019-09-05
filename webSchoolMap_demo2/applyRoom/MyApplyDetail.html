@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="css/mui.css" rel="stylesheet" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+
+		<!-- <link rel="stylesheet" type="text/css" href="css/app.css" /> -->
+		<script src="js/jquery-3.3.1.min.js"></script>
+		<style>
+			.title {
+				margin: 20px 15px 10px;
+				color: #6d6d72;
+				font-size: 15px;
+				/* height: 17px; */
+			}
+		</style>
+	</head>
+
+	<body onload="myContent()">
+		<div>
+			<header id="header" class="mui-bar mui-bar-nav">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">我的预约</h1>
+				<button id="myapply" class="mui-btn mui-btn-blue mui-btn-link mui-pull-right" type="button" onclick="other_oppoint()">已被预约</button>
+			</header>
+			<div class="topname">
+				<p id="text-name">Qualsn</p>
+			</div>
+		</div>
+		<h5 class="mui-content-padded" style="margin: 35px 10px 15px 10px;">滑动显示，点击按钮触发删除事件</h5>
+		<div class="mui-content div-content" id="div-content">
+
+
+		</div>
+		<!-- <script src="js/mui.js"></script> -->
+		<script src="../js/mui.min.js"></script>
+		<script src="js/myapply.js"></script>
+		<script>
+			mui.init();
+			
+			
+			
+
+			function other_oppoint() {
+				mui.openWindow({
+					url: "ApplyMessage.html",
+					// id: "placeTypeList",
+					// extras: {
+					// 	items: name,
+					// },
+					createNew: false, //是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+					show: {
+						autoShow: true, //页面loaded事件发生后自动显示，默认为true
+						aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
+						duration: 100 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+					},
+					waiting: {
+						autoShow: true, //自动显示等待框，默认为true
+						title: '正在加载...', //等待对话框上显示的提示内容
+					}
+
+				})
+			}
+		</script>
+	</body>
+</html>
